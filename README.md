@@ -23,6 +23,6 @@ Every benchmark number DNAi publishes lives with its pipeline, grader, and artif
 
 The Citadel monorepo (FastAPI, React + Vite, Qdrant, PostgreSQL, Redis, Docker; about 3,200 tracked files and 3,000 commits on main since December 2025, 97% of them by the two physician co-founders) is private because it runs a live medical product with real users. Walkthrough on request.
 
-Co-founder: Paridhi Anand, MD.
+Co-founder: [Paridhi Anand, MD](https://github.com/circumferance).
 
 Contact: dsingh@dnai.systems
