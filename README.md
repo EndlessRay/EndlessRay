@@ -10,14 +10,11 @@ Every benchmark number DNAi publishes lives with its pipeline, grader, and artif
 
 - HealthBench Hard, 1,000 items, official gpt-4.1 grader: Asha 42.0 against 29.4 for its own bare composer (GPT-6 Astra), +12.6 pp paired on the same items (run 2026-09-21).
 - MedQA USMLE, 1,273 locked items, single shot: 95.52%, 0 parse failures (2026-05-04).
-- psychosis-bench, 96 intervention-eligible turns: 95.8% safe-intervention rate against 30.2% for the same backbone without the architecture (2026-05-11).
+- psychosis-bench, 96 intervention-eligible turns: 95.8% safe-intervention rate against 30.2% for the same model family (Gemini 2.5) without Asha (2026-05-11).
 
-## Public repositories, in reading order
+## Public repository
 
-1. [asha-bench-public](https://github.com/EndlessRay/asha-bench-public): bit-exact reproducible artifacts for MedQA, META_CORRECT, psychosis-bench, and enclomiphene-bench. SHA-256 locked inputs, pre-registered hypotheses, retractions kept in the same history.
-2. [asha-healthbench-2026-06-26](https://github.com/EndlessRay/asha-healthbench-2026-06-26): consolidated HealthBench runs (standard, Hard, Professional), pipeline glossary, 24-page preprint.
-3. [asha-aom-chart-2026-08](https://github.com/EndlessRay/asha-aom-chart-2026-08): verbatim production traces on a clinician-authored locked pediatric protocol.
-4. [asha-a2a](https://github.com/EndlessRay/asha-a2a): Asha over the A2A protocol, with the provenance contract every response carries. Live at `api.askasha.org`.
+[asha-benchmarks](https://github.com/EndlessRay/asha-benchmarks): every public benchmark artifact in one place. The same language model alone and inside Asha, on the same items under the same grader: HealthBench (all 5,000, Hard, Professional, the Vishwanath et al. 500), MedQA, psychosis-bench, enclomiphene-bench and a locked pediatric chart, with per-item data, SHA-256 manifests, pre-registrations, model cards and A2A agent cards. Live register: [dnai.systems/benchmarks](https://dnai.systems/benchmarks).
 
 ## Where the code is
 
