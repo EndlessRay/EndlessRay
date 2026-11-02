@@ -1,25 +1,46 @@
 # Deepan Singh, MD, FAPA
 
-Physician-founder and CEO of [DNAi Systems](https://dnai.systems). I build [Asha](https://askasha.org), a retrieval-grounded fiduciary medical AI, and the platform it runs on.
+Physician-founder and CEO of [DNAi Systems](https://dnai.systems). I build [Asha](https://askasha.org), a medical AI agent that returns its sources with every answer, and the platform it runs on.
 
-## What I build
+## Start here
 
-Asha is a neurosymbolic medical agent. The language model is the verbalization layer; the intelligence sits around it: KIL retrieval over a curated Qdrant corpus (144M+ vectors, ~1,071 collections, ~314 of them knowledge-source), an Epistemic Arena where candidate claims compete before anything is said, and META_CORRECT, a deterministic post-emission corrector. US Patent 12,555,008 B1, granted 2026-02-17.
+| If you want to | Go to |
+|---|---|
+| Call Asha from your product (OpenAI SDK, A2A, MCP, CLI) | [**DNAiOS/asha**](https://github.com/DNAiOS/asha) |
+| Check the benchmark numbers item by item | [**asha-benchmarks**](https://github.com/EndlessRay/asha-benchmarks) |
+| See the published register (hash-checked against the live API) | [dnai.systems/benchmarks](https://dnai.systems/benchmarks) |
+| Read the paper (preprint, not peer reviewed) | [doi:10.21203/rs.3.rs-10206806/v1](https://doi.org/10.21203/rs.3.rs-10206806/v1) |
 
-Every benchmark number DNAi publishes lives with its pipeline, grader, and artifacts at [dnai.systems/benchmarks](https://dnai.systems/benchmarks). Three rows from the current register:
+```python
+from openai import OpenAI
 
-- HealthBench Hard, 1,000 items, official gpt-4.1 grader: Asha 42.0 against 29.4 for its own bare composer (GPT-6 Astra), +12.6 pp paired on the same items (run 2026-09-21).
-- MedQA USMLE, 1,273 locked items, single shot: 95.52%, 0 parse failures (2026-05-04).
-- psychosis-bench, 96 intervention-eligible turns: 95.8% safe-intervention rate against 30.2% for the same model family (Gemini 2.5) without Asha (2026-05-11).
+client = OpenAI(base_url="https://api.askasha.org/v1", api_key="dnai_a2a_...")
+reply = client.chat.completions.create(
+    model="asha",
+    messages=[{"role": "user", "content": "Which antihypertensives are safe in pregnancy?"}],
+)
+print(reply.choices[0].message.content)
+print(reply.model_extra["dnai_meta"]["citations"][:3])
+```
 
-## Public repository
+Free key: [askasha.org/developers](https://askasha.org/developers/).
 
-[asha-benchmarks](https://github.com/EndlessRay/asha-benchmarks): every public benchmark artifact in one place. The same language model alone and inside Asha, on the same items under the same grader: HealthBench (all 5,000, Hard, Professional, the Vishwanath et al. 500), MedQA, psychosis-bench, enclomiphene-bench and a locked pediatric chart, with per-item data, SHA-256 manifests, pre-registrations, model cards and A2A agent cards. Live register: [dnai.systems/benchmarks](https://dnai.systems/benchmarks).
+## What Asha is
 
-## Where the code is
+An architecture around a language model. No model is fine-tuned. Questions go through retrieval from a curated medical corpus (111M vectors in its 20 public collections, committed by SHA-512 at [`/api/audit/corpus-state/public`](https://api.askasha.org/api/audit/corpus-state/public)), specialist agents, claim falsification, and safety gates before and after generation. US Patent [12,555,008 B1](https://patents.google.com/patent/US12555008B1), granted 2026-02-17.
 
-The Citadel monorepo (FastAPI, React + Vite, Qdrant, PostgreSQL, Redis, Docker; about 3,200 tracked files and 3,000 commits on main since December 2025, 97% of them by the two physician co-founders) is private because it runs a live medical product with real users. Walkthrough on request.
+The benchmarks are paired: the same model alone and inside Asha, on the same items, under the same grader. Three rows from the register (2026-11-01):
 
-Co-founder: [Paridhi Anand, MD](https://github.com/circumferance).
+| Benchmark | Model alone | Inside Asha |
+|---|---|---|
+| HealthBench Hard, 1,000 items, official gpt-4.1 grader | 32.4 | 48.7 (+16.3; length-adjusted +13.7) |
+| HealthBench, all 5,000 conversations, official grader | 55.6 | 65.5 (+9.8; length-adjusted +7.4) |
+| psychosis-bench, 96 turns, May 2026 model | 30.2% | 95.8% |
 
-Contact: dsingh@dnai.systems
+Limits are published next to every row, including where frontier models with web search score higher. Read them before quoting a number.
+
+## Where the product code is
+
+The Citadel monorepo (FastAPI, React + Vite, Qdrant, PostgreSQL, Redis, Docker) is private because it runs a live medical product with real users. Since December 2025: 3,521 commits on main and 1,315 merged pull requests, 97% of the commits by the two physician co-founders. Walkthrough on request.
+
+Co-founder: [Paridhi Anand, MD](https://github.com/circumferance). Contact: dsingh@dnai.systems
